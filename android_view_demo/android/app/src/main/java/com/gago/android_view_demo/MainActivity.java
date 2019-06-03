@@ -10,5 +10,6 @@ public class MainActivity extends FlutterActivity {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
     FlutterTextViewPlugin.registerWith(this);
+    Battery battery = new Battery(this,getFlutterView());
   }
 }

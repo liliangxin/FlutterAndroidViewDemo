@@ -32,6 +32,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   MethodChannel _channel;
   TextViewController _controller;
+  int _battery = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,10 @@ class _MyHomePageState extends State<MyHomePage> {
             },child: Text('设置字体'),),
             RaisedButton(onPressed: (){
               _controller.setText("自定义文字");
-            },child: Text('设置文字'),)
+            },child: Text('设置文字'),),
+            RaisedButton(onPressed: (){
+              getBattery();
+            },child: Text('获取电量$_battery'),)
           ],
         ),
       )
@@ -65,5 +69,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> setText() async {
     return _channel.invokeMethod('setText', 'sssssss');
+  }
+
+  Future<Null> getBattery() async {
+    _channel = MethodChannel('com.gago.android_view_demo/BatteryPlugin');
+    int result = await _channel.invokeMethod('getBattery');
+    setState(() {
+      _battery = result;
+    });
   }
 }
